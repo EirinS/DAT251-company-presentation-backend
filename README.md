@@ -12,3 +12,8 @@ git clone https://github.com/EirinS/DAT251-company-presentation.git
 
 ### For IntelliJ:
 TODO
+
+
+### Known problems:
+Can't find main or some other file.
+  - Solution: right click project, select maven, and update project (sources and javadoc) and then run main.
