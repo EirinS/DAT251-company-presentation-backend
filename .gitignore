@@ -147,4 +147,7 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
+### Out ignores ###
+**/application.properties
+
 # End of https://www.gitignore.io/api/java,maven,gradle,intellij
