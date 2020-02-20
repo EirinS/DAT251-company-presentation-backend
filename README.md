@@ -1,6 +1,8 @@
 # DAT251-company-presentation
 School project for improving the system for registrating for company presentations.
 
+Use npm to do installs
+
 ## Setup
 git clone https://github.com/EirinS/DAT251-company-presentation.git
 
