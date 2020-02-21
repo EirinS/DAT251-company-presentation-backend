@@ -12,9 +12,9 @@ git clone https://github.com/EirinS/DAT251-company-presentation.git
 3. Locate DAT251-company-presentation
 4. Wait for eclipse to download sources and javadocs, may take a little while.
 
-### For IntelliJ:
-TODO
-
+### Connect to the google cloud database
+  - In mySQL workbench create a new connection with these parameters
+  - HostName: 35.228.69.153, Port: 3306, Username: dat251, Password: ask Even or Eivind
 
 ### Known problems:
 Can't find main or some other file.
