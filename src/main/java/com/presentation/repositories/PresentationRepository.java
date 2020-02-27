@@ -1,8 +1,7 @@
-package repositories;
+package com.presentation.repositories;
 
-import entities.Presentation;
+import com.presentation.entities.Presentation;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 public interface PresentationRepository extends CrudRepository<Presentation, Integer> {
 }

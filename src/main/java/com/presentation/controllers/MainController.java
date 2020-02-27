@@ -1,7 +1,7 @@
-package controllers;
+package com.presentation.controllers;
 
-import entities.Presentation;
-import repositories.PresentationRepository;
+import com.presentation.entities.Presentation;
+import com.presentation.repositories.PresentationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import entities.User;
-import repositories.UserRepository;
+import com.presentation.entities.User;
+import com.presentation.repositories.UserRepository;
 
 @Controller	// This means that this class is a Controller
 @RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
