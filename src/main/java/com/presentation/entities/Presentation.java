@@ -16,8 +16,6 @@ public class Presentation {
 
     private String name;
 
-
-
     private Date dateOfPresentation;
 
     private String companyPresenting;

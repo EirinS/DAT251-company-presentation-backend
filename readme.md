@@ -22,3 +22,5 @@ spring.cloud.gcp.sql.database-name=[YOUR_DB_NAME]
 spring.cloud.gcp.sql.instance-connection-name=[PROJECT_ID]:[ZONE]:[INSTANCE-NAME]
 spring.datasource.password=[YOUR_PWD]
 spring.datasource.username=[YOUR_USERNAME]
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.database-platform=org.hibernate.dialect.MySQL5InnoDBDialect
