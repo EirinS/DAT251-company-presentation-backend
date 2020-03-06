@@ -53,7 +53,7 @@ public class MainController {
 	/**
 	 * Presentation
 	 */
-	@PostMapping(path="/addPresentations") // Map ONLY POST Requests
+	@PostMapping(path="/addPresentation") // Map ONLY POST Requests
 	public @ResponseBody String addNewPresentation (
 			@RequestParam Date dateOfPresentation,
 			@RequestParam String companyPresenting,
