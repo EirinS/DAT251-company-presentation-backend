@@ -24,6 +24,9 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+
+		<!-- must be commented out when using local DB -->
+		<!--
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-gcp-starter</artifactId>
@@ -36,6 +39,9 @@
 			<groupId>com.google.cloud.sql</groupId>
 			<artifactId>mysql-socket-factory</artifactId>
 		</dependency>
+		-->
+
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -84,6 +90,8 @@
 
 	</dependencies>
 
+	<!-- must be commented out when using local DB -->
+	<!--
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -95,6 +103,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	-->
 
 	<build>
 		<plugins>
