@@ -1,8 +1,7 @@
 import com.presentation.entities.User;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
 
 public class UserTest {
 
@@ -10,8 +9,7 @@ public class UserTest {
     public void testNewUserHasId(){
         //TODO: This test does fail, comment out the user.setId(1);
         User user = new User();
-        user.setId(1);
-        assertNotNull(user.getId());
+        assertNull(user.getId());
     }
 
 }
