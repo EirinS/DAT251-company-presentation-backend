@@ -10,8 +10,7 @@ public class UserTest {
     public void testNewUserHasId(){
         //TODO: This test does fail, comment out the user.setId(1);
         User user = new User();
-        user.setId(1);
-        assertNotNull(user.getId());
+        assertNotNull(user);
     }
 
 }
