@@ -14,17 +14,17 @@ public class Presentation {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
-    private String name;
-
     private Date dateOfPresentation;
 
     private String companyPresenting;
 
     private int maxAttendance;
 
-    // Should be changed into an actual user
     private String contactPerson;
 
+    private String meetupAdress;
+
+    private String description;
 
     public Integer getId() {
         return id;
@@ -32,14 +32,6 @@ public class Presentation {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Date getDateOfPresentation() {
@@ -72,5 +64,21 @@ public class Presentation {
 
     public void setContactPerson(String contactPerson) {
         this.contactPerson = contactPerson;
+    }
+
+    public String getMeetupAdress() {
+        return meetupAdress;
+    }
+
+    public void setMeetupAdress(String meetupAdress) {
+        this.meetupAdress = meetupAdress;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
