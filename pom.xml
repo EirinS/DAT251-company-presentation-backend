@@ -61,6 +61,15 @@
 		</dependency>
 
 		<!-- TEST RELATED -->
+
+		<!-- MOCKING -->
+		<!-- LOCAL -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		<!-- Mocking end -->
+
 		<dependency>
 			<groupId>org.awaitility</groupId>
 			<artifactId>awaitility</artifactId>

@@ -1,3 +1,5 @@
+package com.presentation;
+
 import com.presentation.entities.User;
 import org.junit.Test;
 
