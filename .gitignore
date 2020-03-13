@@ -148,6 +148,8 @@ gradle-app.setting
 **/build/
 
 ### Out ignores ###
-**/application.properties
+# Might want to ignore it again?
+#**/application.properties
+
 
 # End of https://www.gitignore.io/api/java,maven,gradle,intellij
