@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(classes=AccessingDataMysqlApplication.class)
 @AutoConfigureMockMvc
 public class MainControllerMockTest {
 
