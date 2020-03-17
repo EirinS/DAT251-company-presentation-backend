@@ -1,8 +1,6 @@
 package com.presentation.entities;
 
 
-import jdk.internal.jline.internal.Nullable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,13 +12,13 @@ public class Company {
     @Id
     private String companyName;
 
-    @Nullable
+
     private String logo;
 
-    @Nullable
+
     private String website;
 
-    @Nullable
+
     private String contactPerson;
 
 
