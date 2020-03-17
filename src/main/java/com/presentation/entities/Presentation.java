@@ -22,7 +22,7 @@ public class Presentation {
 
     private String contactPerson;
 
-    private String meetupAdress;
+    private String meetupAddress;
 
     private String description;
 
@@ -67,11 +67,11 @@ public class Presentation {
     }
 
     public String getMeetupAdress() {
-        return meetupAdress;
+        return meetupAddress;
     }
 
     public void setMeetupAdress(String meetupAdress) {
-        this.meetupAdress = meetupAdress;
+        this.meetupAddress = meetupAdress;
     }
 
     public String getDescription() {
