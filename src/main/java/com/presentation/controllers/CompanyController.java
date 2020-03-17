@@ -1,5 +1,6 @@
 package com.presentation.controllers;
 
+import com.presentation.entities.Company;
 import com.presentation.entities.Presentation;
 import com.presentation.repositories.CompanyRepository;
 import com.presentation.repositories.PresentationRepository;
@@ -19,33 +20,27 @@ public class CompanyController {
     private CompanyRepository companyRepository;
 
 
-    /*
-    @PostMapping(path="/addPresentation") // Map ONLY POST Requests
+    @PostMapping(path="/addCompany") // Map ONLY POST Requests
     public @ResponseBody
     String addNewPresentation (
-            @RequestParam Date dateOfPresentation,
-            @RequestParam String companyPresenting,
-            @RequestParam int maxAttendance,
-            @RequestParam String contactPerson,
-            @RequestParam String meetupAddress,
-            @RequestParam String description) {
+            @RequestParam String companyName,
+            @RequestParam String logo,
+            @RequestParam String website,
+            @RequestParam String contactPerson) {
 
-        Presentation presentation = new Presentation();
-        presentation.setDateOfPresentation(dateOfPresentation);
-        presentation.setCompanyPresenting(companyPresenting);
-        presentation.setMaxAttendance(maxAttendance);
-        presentation.setContactPerson(contactPerson);
-        presentation.setMeetupAdress(meetupAddress);
-        presentation.setDescription(description);
+        Company company = new Company();
+        company.setCompanyName(companyName);
+        company.setLogo(logo);
+        company.setWebsite(website);
+        company.setContactPerson(contactPerson);
 
-        presentationRepository.save(presentation);
+        companyRepository.save(company);
         return "Saved";
     }
 
-    @GetMapping(path="/allPresentations")
-    public @ResponseBody Iterable<Presentation> getPresentations() {
-        return presentationRepository.findAll();
+    @GetMapping(path="/allCompanies")
+    public @ResponseBody Iterable<Company> getCompanies() {
+        return companyRepository.findAll();
     }
-     */
 
 }
