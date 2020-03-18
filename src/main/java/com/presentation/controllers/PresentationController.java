@@ -1,5 +1,6 @@
 package com.presentation.controllers;
 
+import com.presentation.entities.Company;
 import com.presentation.entities.Presentation;
 import com.presentation.repositories.PresentationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class PresentationController {
     public @ResponseBody
     String addNewPresentation (
             @RequestParam Date dateOfPresentation,
-            @RequestParam String companyPresenting,
+            @RequestParam Company companyPresenting,
             @RequestParam int maxAttendance,
             @RequestParam String contactPerson,
             @RequestParam String meetupAddress,

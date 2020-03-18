@@ -1,9 +1,9 @@
 package com.presentation.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Set;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class User {
@@ -11,20 +11,45 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	private String name;
+	@NotNull
+	private String firstName;
 
+	@NotNull
+	private String lastName;
+
+	@NotNull
 	private String email;
+
+	@NotNull
+	private String study;
+
+	@NotNull
+	private String year; //aarstrinn på norsk
+
+	private String foodPreferences;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<UserAttendingPresentation> attendingPresentations;
+
 
 	public Integer getId() {
 		return id;
 	}
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -33,5 +58,37 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getStudy() {
+		return study;
+	}
+
+	public void setStudy(String study) {
+		this.study = study;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public String getFoodPreferences() {
+		return foodPreferences;
+	}
+
+	public void setFoodPreferences(String foodPreferences) {
+		this.foodPreferences = foodPreferences;
+	}
+
+	public Set<UserAttendingPresentation> getAttendingPresentations() {
+		return attendingPresentations;
+	}
+
+	public void setAttendingPresentations(Set<UserAttendingPresentation> attendingPresentations) {
+		this.attendingPresentations = attendingPresentations;
 	}
 }

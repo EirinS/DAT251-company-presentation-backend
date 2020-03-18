@@ -1,6 +1,7 @@
 package com.presentation.controllers;
 
 import com.presentation.entities.Presentation;
+import com.presentation.entities.UserAttendingPresentation;
 import com.presentation.repositories.PresentationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,14 +25,23 @@ public class UserController {
 
 	@PostMapping(path="/addUser") // Map ONLY POST Requests
 	public @ResponseBody String addNewUser (
-			@RequestParam String name,
-			@RequestParam String email){
+			@RequestParam String firstName,
+			@RequestParam String lastName,
+			@RequestParam String email,
+			@RequestParam String study,
+			@RequestParam String year,
+			@RequestParam String foodPreference
+	){
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 
 		User user = new User();
-		user.setName(name);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
 		user.setEmail(email);
+		user.setStudy(study);
+		user.setYear(year);
+		user.setFoodPreferences(foodPreference);
 		userRepository.save(user);
 		return "Saved";
 	}
