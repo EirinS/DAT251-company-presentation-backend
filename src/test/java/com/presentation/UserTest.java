@@ -84,7 +84,7 @@ public class UserTest {
         userRepo.save(user);
 
         // Check that count is the same
-        //assertEquals(newName, userRepo.findById(user.getId()).get().getName());
+        assertEquals(newName, userRepo.findById(user.getId()).get().getFirstName());
     }
 
     @Test
