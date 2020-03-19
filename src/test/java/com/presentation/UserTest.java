@@ -90,4 +90,11 @@ public class UserTest {
         assertEquals(newMail, userRepo.findById(user.getId()).get().getEmail());
     }
 
+    @Test
+    public void deletingAllUsersMakesDBEmpty(){
+        Iterable<User> users = userRepo.findAll();
+        users.forEach(user -> userRepo.delete(user));
+        assertEquals(0, userRepo.count());
+    }
+
 }
