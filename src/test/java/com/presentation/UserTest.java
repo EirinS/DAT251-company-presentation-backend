@@ -2,6 +2,7 @@ package com.presentation;
 
 import com.presentation.entities.User;
 import com.presentation.repositories.UserRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +20,30 @@ public class UserTest {
     @Autowired
     private UserRepository userRepo;
 
+    @Before
+    public void addUser(){
+        User user = new User();
+        user.setName("test");
+        user.setEmail("email");
+        userRepo.save(user);
+    }
+
+    public User getUser(){
+        if(userRepo.count() == 0)
+            throw new IndexOutOfBoundsException("No users in DB");
+
+        Iterator<User> allUsers = userRepo.findAll().iterator();
+        return allUsers.next();
+    }
+
     @Test
     public void userRepositoryIsCreated(){
         assertNotNull(userRepo);
     }
 
-
     @Test
     public void dbHasUserTest(){
-        User user = new User();
-        user.setName("test");
-        user.setEmail("email");
-        userRepo.save(user);
-        assertNotEquals(0, userRepo.count());
-
+        assertTrue(userRepo.count() > 0);
     }
 
     @Test
@@ -48,19 +59,35 @@ public class UserTest {
     @Test
     public void modifyingUserDoesNotChangeCount(){
         long current_count = userRepo.count();
-        Iterator<User> allUsers = userRepo.findAll().iterator();
-
-        // No users in db, count not modified
-        if(!allUsers.hasNext())
-            return;
-
         // Get user and change name
-        User user = allUsers.next();
+        User user = getUser();
         user.setName("changed");
         userRepo.save(user);
 
         // Check that count is the same
         assertEquals(current_count, userRepo.count());
+    }
+
+    @Test
+    public void changingUserNameChangesName(){
+        String newName = "changed";
+        User user = getUser();
+        user.setName(newName);
+        userRepo.save(user);
+
+        // Check that count is the same
+        assertEquals(newName, userRepo.findById(user.getId()).get().getName());
+    }
+
+    @Test
+    public void changingUserEmailChangesEmail(){
+        String newMail = "changed@change.no";
+        User user = getUser();
+        user.setEmail(newMail);
+        userRepo.save(user);
+
+        // Check that count is the same
+        assertEquals(newMail, userRepo.findById(user.getId()).get().getEmail());
     }
 
 }
