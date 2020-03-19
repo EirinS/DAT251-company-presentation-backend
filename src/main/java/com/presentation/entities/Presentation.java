@@ -1,11 +1,10 @@
 package com.presentation.entities;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Presentation {
@@ -14,17 +13,26 @@ public class Presentation {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
+    @NotNull
     private Date dateOfPresentation;
 
-    private String companyPresenting;
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private Company companyPresenting;
 
     private int maxAttendance;
 
     private String contactPerson;
 
-    private String meetupAdress;
+    private String meetupAddress;
 
     private String description;
+
+    @OneToMany(mappedBy = "presentation", cascade = CascadeType.ALL)
+    private Set<UserAttendingPresentation> usersAttending;
+
+
 
     public Integer getId() {
         return id;
@@ -42,11 +50,11 @@ public class Presentation {
         this.dateOfPresentation = dateOfPresentation;
     }
 
-    public String getCompanyPresenting() {
+    public Company getCompanyPresenting() {
         return companyPresenting;
     }
 
-    public void setCompanyPresenting(String companyPresenting) {
+    public void setCompanyPresenting(Company companyPresenting) {
         this.companyPresenting = companyPresenting;
     }
 
@@ -67,11 +75,11 @@ public class Presentation {
     }
 
     public String getMeetupAdress() {
-        return meetupAdress;
+        return meetupAddress;
     }
 
     public void setMeetupAdress(String meetupAdress) {
-        this.meetupAdress = meetupAdress;
+        this.meetupAddress = meetupAdress;
     }
 
     public String getDescription() {
