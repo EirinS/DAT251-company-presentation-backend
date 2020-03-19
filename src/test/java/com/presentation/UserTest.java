@@ -41,6 +41,7 @@ public class UserTest {
         assertNotNull(userRepo);
     }
 
+
     @Test
     public void dbHasUserTest(){
         assertTrue(userRepo.count() > 0);
@@ -92,9 +93,15 @@ public class UserTest {
 
     @Test
     public void deletingAllUsersMakesDBEmpty(){
-        Iterable<User> users = userRepo.findAll();
-        users.forEach(user -> userRepo.delete(user));
+        userRepo.deleteAll();
         assertEquals(0, userRepo.count());
+    }
+
+    @Test
+    public void getZeroUsersFromEmptyDB(){
+        userRepo.deleteAll();
+        Iterator<User> users = userRepo.findAll().iterator();
+        assertFalse(users.hasNext());
     }
 
 }
