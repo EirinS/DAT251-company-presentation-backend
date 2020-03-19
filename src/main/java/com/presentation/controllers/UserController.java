@@ -29,8 +29,7 @@ public class UserController {
 			@RequestParam String lastName,
 			@RequestParam String email,
 			@RequestParam String study,
-			@RequestParam String year,
-			@RequestParam String foodPreference
+			@RequestParam String year
 	){
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
@@ -41,7 +40,6 @@ public class UserController {
 		user.setEmail(email);
 		user.setStudy(study);
 		user.setYear(year);
-		user.setFoodPreferences(foodPreference);
 		userRepository.save(user);
 		return "Saved";
 	}

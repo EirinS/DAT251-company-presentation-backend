@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest()
 @AutoConfigureMockMvc
-public class MainControllerMockTest {
+public class UserControllerMockTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -20,7 +20,7 @@ public class MainControllerMockTest {
     @Test
     public void addingAUserShouldReturn200Ok() throws Exception {
 
-        mockMvc.perform(post("/addUser?name=Eivind&email=testmail")
+        mockMvc.perform(post("/addUser?firstName=Eivind&lastName=Hexeberg&email=testmail&study=PU&year=4")
                 .contentType("application/json"))
                 .andExpect(status().isOk());
     }
