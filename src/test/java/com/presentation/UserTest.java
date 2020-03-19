@@ -69,7 +69,7 @@ public class UserTest {
         long current_count = userRepo.count();
         // Get user and change name
         User user = getUser();
-       // user.setName("changed");
+        user.setFirstName("changed");
         userRepo.save(user);
 
         // Check that count is the same
@@ -77,10 +77,10 @@ public class UserTest {
     }
 
     @Test
-    public void changingUserNameChangesName(){
+    public void changingUserFirstNameChangesFirstName(){
         String newName = "changed";
         User user = getUser();
-       // user.setName(newName);
+        user.setFirstName(newName);
         userRepo.save(user);
 
         // Check that count is the same
