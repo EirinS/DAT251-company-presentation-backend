@@ -14,8 +14,8 @@ import java.util.Iterator;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-//@DataJpaTest
-@SpringBootTest
+@DataJpaTest
+//@SpringBootTest
 public class UserTest {
 
     @Autowired
@@ -75,6 +75,7 @@ public class UserTest {
         // Check that count is the same
         assertEquals(current_count, userRepo.count());
     }
+
 
     @Test
     public void changingUserFirstNameChangesFirstName(){
