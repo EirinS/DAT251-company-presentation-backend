@@ -3,6 +3,7 @@ package com.presentation.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
+import java.util.Set;
 
 @Entity
 public class Company {
@@ -18,8 +19,8 @@ public class Company {
 
     private String contactPerson;
 
-    @OneToOne
-    private Presentation presentation;
+    @OneToMany(mappedBy = "companyPresenting", cascade = CascadeType.ALL)
+    private Set<Presentation> presentations;
 
 
 
