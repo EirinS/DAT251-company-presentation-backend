@@ -49,12 +49,12 @@ public class UserController {
 	}
 
 	@GetMapping(path = "/userByID")
-	public @ResponseBody User getUserById(@RequestParam int id){
-		Optional<User> sqlResult = userRepository.findById(id);
-		if (!sqlResult.isPresent()){
+	public @ResponseBody Optional<User> getUserById(@RequestParam int id){
+		Optional<User> maybeUser = userRepository.findById(id);
+		if (!maybeUser.isPresent()){
 			System.err.println("No user with this id exists in the database");
 		}
-		return sqlResult.get();
+		return maybe;
 	}
 
 
