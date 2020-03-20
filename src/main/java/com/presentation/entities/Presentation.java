@@ -29,6 +29,14 @@ public class Presentation {
 
     private String description;
 
+    public Set<UserAttendingPresentation> getUsersAttending() {
+        return usersAttending;
+    }
+
+    public void setUsersAttending(Set<UserAttendingPresentation> usersAttending) {
+        this.usersAttending = usersAttending;
+    }
+
     @OneToMany(mappedBy = "presentation", cascade = CascadeType.ALL)
     private Set<UserAttendingPresentation> usersAttending;
 

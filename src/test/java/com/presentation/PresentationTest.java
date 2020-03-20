@@ -2,6 +2,8 @@ package com.presentation;
 
 import com.presentation.entities.Company;
 import com.presentation.entities.Presentation;
+import com.presentation.entities.User;
+import com.presentation.entities.UserAttendingPresentation;
 import com.presentation.repositories.PresentationRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,7 +58,7 @@ public class PresentationTest {
         // should yield exception.
         assertThrows(DataIntegrityViolationException.class, () -> presentationRepo.save(pres));
     }
-    
+
 
     @Test
     public void presentationMustHaveCompany() {
@@ -76,6 +81,22 @@ public class PresentationTest {
         assertDoesNotThrow(() -> presentationRepo.save(pres));
     }
 
+    @Test
+    public void presentationCanHaveAttendees(){
+        Presentation pres = new Presentation();
+        setPresentationValues(pres);
+
+        Set<UserAttendingPresentation> users = new HashSet<>();
+        // Create some users
+        User u = new User(); u.setFirstName("Eirin");
+        UserAttendingPresentation ua = new UserAttendingPresentation(); ua.setPresentation(pres); ua.setUser(u);
+        users.add(ua);
+        pres.setUsersAttending(users);
+
+        Presentation returned = presentationRepo.save(pres);
+        //assertTrue(returned.getUsersAttending().contains(ua));
+        //Presentation p = presentationRepo.findById(returned.getId()).get();
+    }
 
 
 
