@@ -69,6 +69,13 @@ public class PresentationTest {
         assertThrows(TransactionSystemException.class, () -> presentationRepo.save(pres));
     }
 
+    @Test
+    public void presentationCanBeInsertedInDB(){
+        Presentation pres = new Presentation();
+        setPresentationValues(pres);
+        assertDoesNotThrow(() -> presentationRepo.save(pres));
+    }
+
 
 
 
