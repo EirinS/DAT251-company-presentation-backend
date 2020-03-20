@@ -55,6 +55,20 @@ public class PresentationTest {
     }
     
 
+    @Test
+    public void presentationMustHaveCompany() {
+        Presentation pres = new Presentation();
+        // Set all values of presentation, to make sure nothing else triggers the
+        // exception
+        setPresentationValues(pres);
+        // set Company to null
+        pres.setCompanyPresenting(null);
+
+        // Inserting presentation with null values company
+        // should yield exception.
+        assertThrows(TransactionSystemException.class, () -> presentationRepo.save(pres));
+    }
+
 
 
 
