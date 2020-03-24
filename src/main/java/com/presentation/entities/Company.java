@@ -1,9 +1,9 @@
 package com.presentation.entities;
 
-
 import javax.persistence.*;
-import javax.validation.constraints.Null;
 import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Company {
@@ -29,7 +29,6 @@ public class Company {
     public void setPresentations(Set<Presentation> presentations) {
         this.presentations = presentations;
     }
-
 
     public String getCompanyName() {
         return companyName;

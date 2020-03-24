@@ -10,7 +10,7 @@ import java.util.Set;
 public class Presentation {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     //@NotNull
@@ -31,11 +31,6 @@ public class Presentation {
 
     @OneToMany(mappedBy = "presentation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserAttendingPresentation> usersAttending;
-
-
-
-
-
 
     public Set<UserAttendingPresentation> getUsersAttending() {
         return usersAttending;
@@ -61,16 +56,13 @@ public class Presentation {
         this.dateOfPresentation = dateOfPresentation;
     }
 
-
     public Company getCompanyPresenting() {
         return companyPresenting;
     }
 
-
     public void setCompanyPresenting(Company companyPresenting) {
         this.companyPresenting = companyPresenting;
     }
-
 
     public int getMaxAttendance() {
         return maxAttendance;
