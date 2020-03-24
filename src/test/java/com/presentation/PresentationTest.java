@@ -17,8 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionSystemException;
 
 import javax.transaction.Transactional;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -91,7 +89,7 @@ public class PresentationTest {
     }
 
     @Test
-    public void presentationCanBeInsertedInDB(){
+    public void presentationCanBeInsertedInDB() {
         Presentation pres = new Presentation();
         setPresentationValues(pres);
         assertDoesNotThrow(() -> presentationRepo.save(pres));
@@ -99,7 +97,7 @@ public class PresentationTest {
 
     @Test
     @Transactional
-    public void presentationCanHaveAttendees(){
+    public void presentationCanHaveAttendees() {
 
         Presentation pres = new Presentation();
 

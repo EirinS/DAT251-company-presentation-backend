@@ -10,8 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.swing.text.html.HTMLDocument;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,20 +30,20 @@ public class CompanyTest {
     }
 
     @Test
-    public void companyMustHaveId(){
+    public void companyMustHaveId() {
         Company company = new Company();
         assertThrows(JpaSystemException.class, () -> companyRepo.save(company));
     }
 
     @Test
-    public void companyWithIdCanBeAddedToDB(){
+    public void companyWithIdCanBeAddedToDB() {
         Company company = new Company();
         company.setCompanyName("BedCompany");
         assertDoesNotThrow(() -> companyRepo.save(company));
     }
 
     @Test
-    public void companyCanBeFetchedFromDB(){
+    public void companyCanBeFetchedFromDB() {
         Company company = new Company();
         company.setCompanyName("BedCompany");
         companyRepo.save(company);
@@ -49,7 +51,7 @@ public class CompanyTest {
         assertEquals(company.getCompanyName(), dbCompany.getCompanyName());
     }
 
-    public Presentation addPresentationToCompany(){
+    public Presentation addPresentationToCompany() {
         Company company = new Company();
         company.setCompanyName("BedCompany");
 
@@ -64,7 +66,7 @@ public class CompanyTest {
         return p;
     }
 
-    public int iteratorCount(Iterator iterator){
+    public int iteratorCount(Iterator iterator) {
         int count = 0;
         while (iterator.hasNext()) {
             iterator.next();
@@ -74,13 +76,13 @@ public class CompanyTest {
     }
 
     @Test
-    public void addingPresentationToCompanyAddsOne(){
+    public void addingPresentationToCompanyAddsOne() {
         addPresentationToCompany();
         assertEquals(1, companyRepo.findById("BedCompany").get().getPresentations().size());
     }
 
     @Test
-    public void canFindPresentationsRelatedToCompany(){
+    public void canFindPresentationsRelatedToCompany() {
         Presentation pres = addPresentationToCompany();
         Presentation stored = companyRepo.findById("BedCompany").get().getPresentations().iterator().next();
 
