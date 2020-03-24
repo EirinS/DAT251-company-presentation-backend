@@ -30,7 +30,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserAttendingPresentation> attendingPresentations;
 
-
     public Integer getId() {
         return id;
     }

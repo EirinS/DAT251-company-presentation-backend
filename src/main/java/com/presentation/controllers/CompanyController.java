@@ -15,7 +15,6 @@ public class CompanyController {
     @Autowired
     private CompanyRepository companyRepository;
 
-
     @PostMapping(path = "/addCompany") // Map ONLY POST Requests
     public @ResponseBody
     String addNewPresentation(

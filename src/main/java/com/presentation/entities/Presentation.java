@@ -1,6 +1,5 @@
 package com.presentation.entities;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;

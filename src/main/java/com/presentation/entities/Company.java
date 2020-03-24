@@ -10,12 +10,9 @@ public class Company {
     @Id
     private String companyName;
 
-
     private String logo;
 
-
     private String website;
-
 
     private String contactPerson;
 

@@ -17,7 +17,6 @@ public class UserAttendingPresentationController {
     @Autowired
     private UserAttendingPresentationRepository userAttendingPresentationRepository;
 
-
     @PostMapping(path = "/addCompany") // Map ONLY POST Requests
     public @ResponseBody
     String addNewPresentation(
@@ -42,4 +41,3 @@ public class UserAttendingPresentationController {
     }
 
 }
-
