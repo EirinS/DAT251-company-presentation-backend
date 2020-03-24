@@ -29,7 +29,7 @@ public class Presentation {
 
     private String description;
 
-    @OneToMany(mappedBy = "presentation", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "presentation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserAttendingPresentation> usersAttending;
 
 

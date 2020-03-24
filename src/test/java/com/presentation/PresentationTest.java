@@ -122,7 +122,6 @@ public class PresentationTest {
 
         Presentation returned = presentationRepo.save(pres);
         assertTrue(returned.getUsersAttending().contains(ua));
-        Presentation p = presentationRepo.findById(returned.getId()).get();
     }
 
 

@@ -19,10 +19,16 @@ public class Company {
 
     private String contactPerson;
 
-    @OneToMany(mappedBy = "companyPresenting", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "companyPresenting", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Presentation> presentations;
 
+    public Set<Presentation> getPresentations() {
+        return presentations;
+    }
 
+    public void setPresentations(Set<Presentation> presentations) {
+        this.presentations = presentations;
+    }
 
 
     public String getCompanyName() {
