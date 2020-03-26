@@ -5,15 +5,13 @@ import com.presentation.entities.UserAttendingPresentation;
 import com.presentation.repositories.PresentationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.presentation.entities.User;
 import com.presentation.repositories.UserRepository;
 
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.Optional;
 
 
 @Controller	// This means that this class is a Controller
@@ -48,6 +46,15 @@ public class UserController {
 	public @ResponseBody Iterable<User> getAllUsers() {
 		// This returns a JSON or XML with the users
 		return userRepository.findAll();
+	}
+
+	@GetMapping(path = "/userByID")
+	public @ResponseBody Optional<User> getUserById(@RequestParam int id){
+		Optional<User> maybeUser = userRepository.findById(id);
+		if (!maybeUser.isPresent()){
+			System.err.println("No user with this id exists in the database");
+		}
+		return maybeUser;
 	}
 
 
