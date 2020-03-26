@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import java.util.Iterator;
 
 import static org.junit.Assert.*;
@@ -20,7 +21,7 @@ public class UserTest {
     private UserRepository userRepo;
 
     @Before
-    public void addUser(){
+    public void addUser() {
         User user = new User();
         user.setFirstName("test");
         user.setLastName("Testson");
@@ -30,8 +31,8 @@ public class UserTest {
         userRepo.save(user);
     }
 
-    public User getUser(){
-        if(userRepo.count() == 0)
+    public User getUser() {
+        if (userRepo.count() == 0)
             throw new IndexOutOfBoundsException("No users in DB");
 
         Iterator<User> allUsers = userRepo.findAll().iterator();
@@ -39,18 +40,18 @@ public class UserTest {
     }
 
     @Test
-    public void userRepositoryIsCreated(){
+    public void userRepositoryIsCreated() {
         assertNotNull(userRepo);
     }
 
 
     @Test
-    public void dbHasUserTest(){
+    public void dbHasUserTest() {
         assertTrue(userRepo.count() > 0);
     }
 
     @Test
-    public void addingUserIncreasesDbNumber(){
+    public void addingUserIncreasesDbNumber() {
         long current_count = userRepo.count();
         User user = new User();
         user.setFirstName("second");
@@ -59,11 +60,11 @@ public class UserTest {
         user.setStudy("Sikkerhet");
         user.setYear("2");
         userRepo.save(user);
-        assertEquals(current_count+1, userRepo.count());
+        assertEquals(current_count + 1, userRepo.count());
     }
 
     @Test
-    public void modifyingUserDoesNotChangeCount(){
+    public void modifyingUserDoesNotChangeCount() {
         long current_count = userRepo.count();
         // Get user and change name
         User user = getUser();
@@ -76,7 +77,7 @@ public class UserTest {
 
 
     @Test
-    public void changingUserFirstNameChangesFirstName(){
+    public void changingUserFirstNameChangesFirstName() {
         String newName = "changed";
         User user = getUser();
         user.setFirstName(newName);
@@ -87,7 +88,7 @@ public class UserTest {
     }
 
     @Test
-    public void changingUserEmailChangesEmail(){
+    public void changingUserEmailChangesEmail() {
         String newMail = "changed@change.no";
         User user = getUser();
         user.setEmail(newMail);
@@ -98,13 +99,13 @@ public class UserTest {
     }
 
     @Test
-    public void deletingAllUsersMakesDBEmpty(){
+    public void deletingAllUsersMakesDBEmpty() {
         userRepo.deleteAll();
         assertEquals(0, userRepo.count());
     }
 
     @Test
-    public void getZeroUsersFromEmptyDB(){
+    public void getZeroUsersFromEmptyDB() {
         userRepo.deleteAll();
         Iterator<User> users = userRepo.findAll().iterator();
         assertFalse(users.hasNext());

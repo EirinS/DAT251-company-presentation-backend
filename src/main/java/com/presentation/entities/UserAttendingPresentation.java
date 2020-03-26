@@ -10,7 +10,6 @@ import java.sql.Date;
 //@IdClass(UserAttendingPresentationID.class)
 public class UserAttendingPresentation {
 
-
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
@@ -31,7 +30,6 @@ public class UserAttendingPresentation {
 
     //@NotNull
     private Date signupDateAndTime;
-
 
     public User getUser() {
         return user;

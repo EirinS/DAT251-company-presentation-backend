@@ -18,9 +18,9 @@ public class PresentationController {
     @Autowired
     private PresentationRepository presentationRepository;
 
-    @PostMapping(path="/addPresentation") // Map ONLY POST Requests
+    @PostMapping(path = "/addPresentation") // Map ONLY POST Requests
     public @ResponseBody
-    String addNewPresentation (
+    String addNewPresentation(
             @RequestParam Date dateOfPresentation,
             @RequestParam Company companyPresenting,
             @RequestParam int maxAttendance,
@@ -40,10 +40,10 @@ public class PresentationController {
         return "Saved";
     }
 
-    @GetMapping(path="/allPresentations")
-    public @ResponseBody Iterable<Presentation> getPresentations() {
+    @GetMapping(path = "/allPresentations")
+    public @ResponseBody
+    Iterable<Presentation> getPresentations() {
         return presentationRepository.findAll();
     }
-
 
 }
