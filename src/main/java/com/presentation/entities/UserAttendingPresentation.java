@@ -7,24 +7,29 @@ import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Entity
-@IdClass(UserAttendingPresentationID.class)
+//@IdClass(UserAttendingPresentationID.class)
 public class UserAttendingPresentation {
 
 
     @Id
-    @ManyToOne
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
+
+
+    //@Id
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private User user;
 
-    @Id
-    @ManyToOne
+    //@Id
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Presentation presentation;
 
     @NotNull
     private boolean wantFood;
 
-    @NotNull
+    //@NotNull
     private Date signupDateAndTime;
 
 

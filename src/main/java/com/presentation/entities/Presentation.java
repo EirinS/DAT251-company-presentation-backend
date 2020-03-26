@@ -13,11 +13,11 @@ public class Presentation {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
-    @NotNull
+    //@NotNull
     private Date dateOfPresentation;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Company companyPresenting;
 
@@ -29,10 +29,21 @@ public class Presentation {
 
     private String description;
 
-    @OneToMany(mappedBy = "presentation", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "presentation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserAttendingPresentation> usersAttending;
 
 
+
+
+
+
+    public Set<UserAttendingPresentation> getUsersAttending() {
+        return usersAttending;
+    }
+
+    public void setUsersAttending(Set<UserAttendingPresentation> usersAttending) {
+        this.usersAttending = usersAttending;
+    }
 
     public Integer getId() {
         return id;
@@ -50,13 +61,16 @@ public class Presentation {
         this.dateOfPresentation = dateOfPresentation;
     }
 
+
     public Company getCompanyPresenting() {
         return companyPresenting;
     }
 
+
     public void setCompanyPresenting(Company companyPresenting) {
         this.companyPresenting = companyPresenting;
     }
+
 
     public int getMaxAttendance() {
         return maxAttendance;

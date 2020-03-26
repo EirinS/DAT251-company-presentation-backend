@@ -3,6 +3,7 @@ package com.presentation.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
+import java.util.Set;
 
 @Entity
 public class Company {
@@ -18,10 +19,16 @@ public class Company {
 
     private String contactPerson;
 
-    @OneToOne
-    private Presentation presentation;
+    @OneToMany(mappedBy = "companyPresenting", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Presentation> presentations;
 
+    public Set<Presentation> getPresentations() {
+        return presentations;
+    }
 
+    public void setPresentations(Set<Presentation> presentations) {
+        this.presentations = presentations;
+    }
 
 
     public String getCompanyName() {
