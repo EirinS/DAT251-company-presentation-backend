@@ -22,6 +22,9 @@ public class User {
     private String email;
 
     @NotNull
+    private String password;
+
+    @NotNull
     private String study;
 
     @NotNull
@@ -81,6 +84,18 @@ public class User {
         return foodPreferences;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setFoodPreferences(String foodPreferences) {
         this.foodPreferences = foodPreferences;
     }
@@ -91,5 +106,10 @@ public class User {
 
     public void setAttendingPresentations(Set<UserAttendingPresentation> attendingPresentations) {
         this.attendingPresentations = attendingPresentations;
+    }
+
+    //todo - implement salting of passwords
+    public String getSalt() {
+        return null;
     }
 }

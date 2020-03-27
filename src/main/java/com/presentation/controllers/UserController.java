@@ -2,13 +2,23 @@ package com.presentation.controllers;
 
 import com.presentation.entities.User;
 import com.presentation.repositories.UserRepository;
+import com.presentation.util.AuthenticationRequest;
+import com.presentation.util.AuthenticationResponse;
+import com.presentation.util.JwtUtil;
+import com.presentation.util.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import java.util.Optional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 // This means that this class is a Controller
 @Controller
@@ -18,16 +28,29 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtUtil jwtTokenUtil;
+
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the GET or POST request
     @PostMapping(path = "/addUser") // Map ONLY POST Requests
     public @ResponseBody
     String addNewUser(
-            @RequestParam String firstName,
-            @RequestParam String lastName,
-            @RequestParam String email,
-            @RequestParam String study,
-            @RequestParam String year
+            @Valid @RequestParam String firstName,
+            @Valid @RequestParam String lastName,
+            @Valid @RequestParam String email,
+            @Valid @RequestParam String study,
+            @Valid @RequestParam String year
     ) {
         User user = new User();
         user.setFirstName(firstName);
@@ -54,4 +77,29 @@ public class UserController {
 		}
 		return maybeUser;
 	}
+
+
+    @RequestMapping(value = "/api/authenticate", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+        try {
+            Optional<User> fetchedUser = userRepository.findById(authenticationRequest.getId());
+
+            if (!fetchedUser.isPresent()) throw new BadCredentialsException("Does not exist");
+
+            User user = fetchedUser.get();
+
+            String hashed_pw = BCrypt.hashpw(authenticationRequest.getPassword(), user.getSalt());
+
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getId(), hashed_pw)
+            );
+        }catch(BadCredentialsException e ) {
+            throw new Exception("Incorrect username or password" , e);
+        }
+
+        //todo - lite optimalt å parse til en string for å bruke denne metoden. Finn en annen løsning
+        final UserDetails userDetails = userService.loadUserByUsername(Integer.toString(authenticationRequest.getId()));
+        final String jwt = jwtTokenUtil.generateToken(userDetails);
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+    }
 }
