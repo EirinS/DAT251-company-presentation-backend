@@ -1,5 +1,6 @@
 package com.presentation.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.presentation.entities.IDs.UserAttendingPresentationID;
 
 import javax.persistence.*;
@@ -14,13 +15,11 @@ public class UserAttendingPresentation {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 
-
-    //@Id
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private User user;
 
-    //@Id
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Presentation presentation;
@@ -28,7 +27,6 @@ public class UserAttendingPresentation {
     @NotNull
     private boolean wantFood;
 
-    //@NotNull
     private Date signupDateAndTime;
 
     public User getUser() {
