@@ -1,5 +1,7 @@
 package com.presentation.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -16,6 +18,7 @@ public class Company {
 
     private String contactPerson;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "companyPresenting", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Presentation> presentations;
 
