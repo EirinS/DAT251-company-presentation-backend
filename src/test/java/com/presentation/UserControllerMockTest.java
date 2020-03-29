@@ -20,7 +20,7 @@ public class UserControllerMockTest {
     @Test
     public void addingAUserShouldReturn200Ok() throws Exception {
 
-        mockMvc.perform(post("/addUser?firstName=Eivind&lastName=Hexeberg&email=testmail&study=PU&year=4")
+        mockMvc.perform(post("/addUser?firstName=Eivind&lastName=Hexeberg&email=testmail&study=PU&year=4&password=MockPassword&salt=MockSalt123")
                 .contentType("application/json"))
                 .andExpect(status().isOk());
     }
@@ -28,7 +28,7 @@ public class UserControllerMockTest {
 
     @Test
     public void getUserByIdOneShouldWorkIfAtLeastOneUserIsInDB() throws Exception{
-        mockMvc.perform(post("/addUser?firstName=Henrik&lastName=Hexeberg&email=hotmail&study=Sikkerhet&year=4")
+        mockMvc.perform(post("/addUser?firstName=Henrik&lastName=Hexeberg&email=hotmail&study=Sikkerhet&year=4&password=MockPassword&salt=MockSalt123")
                 .contentType("application/json"));
 
         mockMvc.perform(get("/userByID?id=1")

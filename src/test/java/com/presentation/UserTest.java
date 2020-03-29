@@ -28,6 +28,8 @@ public class UserTest {
         user.setEmail("email");
         user.setStudy("PU");
         user.setYear("4");
+        user.setPassword("password123");
+        user.setSalt("salt123");
         userRepo.save(user);
     }
 
@@ -59,6 +61,8 @@ public class UserTest {
         user.setEmail("email");
         user.setStudy("Sikkerhet");
         user.setYear("2");
+        user.setPassword("password321");
+        user.setSalt("salt321");
         userRepo.save(user);
         assertEquals(current_count + 1, userRepo.count());
     }

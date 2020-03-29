@@ -69,6 +69,7 @@ public class PresentationTest {
 
         // Inserting presentation with null value for date
         // should yield exception.
+
         assertThrows(TransactionSystemException.class, () -> presentationRepo.save(pres));
     }
 
@@ -90,9 +91,26 @@ public class PresentationTest {
     @Test
     @Transactional
     public void presentationCanBeInsertedInDB() {
+        // Får gjennbruk av samme company name 'd' som primary key
+        /*
         Presentation pres = new Presentation();
         setPresentationValues(pres);
         assertDoesNotThrow(() -> presentationRepo.save(pres));
+         */
+
+        //tmp
+
+        Company c = new Company();
+        c.setCompanyName("tmp_d");
+
+        Presentation pres = new Presentation();
+        pres.setCompanyPresenting(c);
+        pres.setMeetupAdress("Thormøhlensgate 55");
+        pres.setMaxAttendance(100);
+        pres.setDescription("desc");
+        pres.setContactPerson("eirin");
+        pres.setDateOfPresentation(new Date());
+
     }
 
     @Test

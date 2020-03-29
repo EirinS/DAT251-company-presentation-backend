@@ -50,7 +50,9 @@ public class UserController {
             @Valid @RequestParam String lastName,
             @Valid @RequestParam String email,
             @Valid @RequestParam String study,
-            @Valid @RequestParam String year
+            @Valid @RequestParam String year,
+            @Valid @RequestParam String password,
+            @Valid @RequestParam String salt
     ) {
         User user = new User();
         user.setFirstName(firstName);
@@ -58,6 +60,9 @@ public class UserController {
         user.setEmail(email);
         user.setStudy(study);
         user.setYear(year);
+        user.setPassword(password);
+        user.setSalt(salt);
+
         userRepository.save(user);
         return "Saved";
     }
@@ -79,7 +84,7 @@ public class UserController {
 	}
 
 
-    @RequestMapping(value = "/api/authenticate", method = RequestMethod.POST)
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             Optional<User> fetchedUser = userRepository.findById(authenticationRequest.getId());

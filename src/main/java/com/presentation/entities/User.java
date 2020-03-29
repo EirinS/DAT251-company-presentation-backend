@@ -24,6 +24,8 @@ public class User {
     @NotNull
     private String password;
 
+    @NotNull String salt;
+
     @NotNull
     private String study;
 
@@ -108,8 +110,11 @@ public class User {
         this.attendingPresentations = attendingPresentations;
     }
 
-    //todo - implement salting of passwords
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     public String getSalt() {
-        return null;
+        return salt;
     }
 }
