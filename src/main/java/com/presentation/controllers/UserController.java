@@ -13,6 +13,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import java.util.Optional;
 
@@ -51,8 +52,7 @@ public class UserController {
             @Valid @RequestParam String email,
             @Valid @RequestParam String study,
             @Valid @RequestParam String year,
-            @Valid @RequestParam String password,
-            @Valid @RequestParam String salt
+            @Valid @RequestParam String password
     ) {
         User user = new User();
         user.setFirstName(firstName);
@@ -61,7 +61,6 @@ public class UserController {
         user.setStudy(study);
         user.setYear(year);
         user.setPassword(password);
-        user.setSalt(salt);
 
         userRepository.save(user);
         return "Saved";
@@ -89,7 +88,9 @@ public class UserController {
         try {
             Optional<User> fetchedUser = userRepository.findById(authenticationRequest.getId());
 
-            if (!fetchedUser.isPresent()) throw new BadCredentialsException("Does not exist");
+            if (!fetchedUser.isPresent()){
+                throw new BadCredentialsException("Does not exist");
+            }
 
             User user = fetchedUser.get();
 
@@ -99,7 +100,7 @@ public class UserController {
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getId(), hashed_pw)
             );
         }catch(BadCredentialsException e ) {
-            throw new Exception("Incorrect username or password" , e);
+            throw new Exception("Incorrect id or password" , e);
         }
 
         //todo - lite optimalt å parse til en string for å bruke denne metoden. Finn en annen løsning

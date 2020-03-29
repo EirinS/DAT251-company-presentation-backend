@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
         if (!user.isPresent()) throw new UsernameNotFoundException("User not found");
         User presentUser = user.get();
 
-        return new org.springframework.security.core.userdetails.User(presentUser.getEmail(), presentUser.getPassword(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(Integer.toString(presentUser.getId()), presentUser.getPassword(), new ArrayList<>());
     }
 
 }

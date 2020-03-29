@@ -47,6 +47,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        // passwords are hashed and salted manually.
+        return NoOpPasswordEncoder.getInstance();
     }
 }

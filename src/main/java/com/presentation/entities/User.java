@@ -1,6 +1,7 @@
 package com.presentation.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -95,7 +96,8 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.setSalt();
+        this.password = BCrypt.hashpw(password, this.salt);
     }
 
     public void setFoodPreferences(String foodPreferences) {
@@ -110,8 +112,8 @@ public class User {
         this.attendingPresentations = attendingPresentations;
     }
 
-    public void setSalt(String salt) {
-        this.salt = salt;
+    private void setSalt() {
+        this.salt = BCrypt.gensalt();
     }
 
     public String getSalt() {
