@@ -19,14 +19,35 @@ public class UserControllerMockTest {
     @Autowired
     private MockMvc mockMvc;
 
+    public ResultActions addUser(String firstname, String lastName, String email, String study, int year, String password)throws Exception{
+        return mockMvc.perform(post("/addUser" +
+                "?firstName="+ firstname +
+                "&lastName=" + lastName +
+                "&email=" + email +
+                "&study=" + study +
+                "&year=" + year +
+                "&password=" + password)
+                .contentType("application/json"));
+    }
+
+    public ResultActions authenticate(int id, String password) throws Exception{
+        String requestAuthJSON = "{\"id\":1, \"password\":\"MockPassword\"}";
+
+        return mockMvc.perform(post("/authenticate")
+                .contentType("application/json")
+                .content(requestAuthJSON));
+    }
+
+    public JSONObject resultActionsToJSON(ResultActions result) throws Exception{
+        return new JSONObject(result.andReturn().getResponse().getContentAsString());
+    }
+
 
     @Test
     public void addingAUserShouldReturn200Ok() throws Exception {
-        mockMvc.perform(post("/addUser?firstName=Eivind&lastName=Hexeberg&email=testmail&study=PU&year=4&password=MockPassword")
-                .contentType("application/json"))
-                .andExpect(status().isOk());
+        ResultActions result = addUser("Eivind", "Halderaker", "eivind@gmail.com", "PU", 4, "passord123" );
+        result.andExpect(status().isOk());
     }
-
 
     @Test
     public void getUserByIdOneShouldBeForbiddenIfNotAuthenticated() throws Exception{
@@ -87,7 +108,6 @@ public class UserControllerMockTest {
                 .header("Authorization", "Bearer " + token)
                 .contentType("application/json"))
                 .andExpect(status().isOk());
-
 
     }
 

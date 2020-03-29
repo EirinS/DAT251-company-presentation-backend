@@ -107,5 +107,9 @@ public class UserController {
         final UserDetails userDetails = userService.loadUserByUsername(Integer.toString(authenticationRequest.getId()));
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
+
+
+
+
     }
 }
