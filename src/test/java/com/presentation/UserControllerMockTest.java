@@ -27,6 +27,16 @@ public class UserControllerMockTest {
 
 
     @Test
+    public void getUserByIdOneShouldBeForbiddenIfNotAuthenticated() throws Exception{
+        mockMvc.perform(post("/addUser?firstName=Henrik&lastName=Hexeberg&email=hotmail&study=Sikkerhet&year=4&password=MockPassword&salt=MockSalt123")
+                .contentType("application/json"));
+
+        mockMvc.perform(get("/userByID?id=1")
+                .contentType("application/json"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
     public void getUserByIdOneShouldWorkIfAtLeastOneUserIsInDB() throws Exception{
         mockMvc.perform(post("/addUser?firstName=Henrik&lastName=Hexeberg&email=hotmail&study=Sikkerhet&year=4&password=MockPassword&salt=MockSalt123")
                 .contentType("application/json"));
