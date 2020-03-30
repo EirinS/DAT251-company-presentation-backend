@@ -63,7 +63,7 @@ public class UserController {
         user.setPassword(password);
 
         userRepository.save(user);
-        return "Saved";
+        return "{\"id\":" + user.getId() + "}";
     }
 
     @GetMapping(path = "/allUsers")

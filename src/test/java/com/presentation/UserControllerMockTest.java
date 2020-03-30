@@ -1,18 +1,28 @@
 package com.presentation;
 
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
+
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest()
+@SpringBootTest
 @AutoConfigureMockMvc
 public class UserControllerMockTest {
 
@@ -30,84 +40,90 @@ public class UserControllerMockTest {
                 .contentType("application/json"));
     }
 
+
+    public ResultActions getUserById(int id, String token) throws Exception{
+        if (token == null) token = "";
+        return mockMvc.perform(get("/userByID?id=" + id)
+                .header("Authorization", "Bearer " + token)
+                .contentType("application/json"));
+    }
+
     public ResultActions authenticate(int id, String password) throws Exception{
-        String requestAuthJSON = "{\"id\":1, \"password\":\"MockPassword\"}";
+        String requestAuthJSON = "{\"id\":" + id + ", \"password\":\"" + password + "\"}";
 
         return mockMvc.perform(post("/authenticate")
                 .contentType("application/json")
                 .content(requestAuthJSON));
     }
 
-    public JSONObject resultActionsToJSON(ResultActions result) throws Exception{
-        return new JSONObject(result.andReturn().getResponse().getContentAsString());
-    }
 
 
     @Test
+    @Transactional
     public void addingAUserShouldReturn200Ok() throws Exception {
         ResultActions result = addUser("Eivind", "Halderaker", "eivind@gmail.com", "PU", 4, "passord123" );
         result.andExpect(status().isOk());
     }
 
     @Test
-    public void getUserByIdOneShouldBeForbiddenIfNotAuthenticated() throws Exception{
-        mockMvc.perform(post("/addUser?firstName=Henrik&lastName=Hexeberg&email=hotmail&study=Sikkerhet&year=4&password=MockPassword")
-                .contentType("application/json"));
+    @Transactional
+    public void getUserByIdShouldBeForbiddenIfNotAuthenticated() throws Exception{
+        ResultActions addUserResult = addUser("Eivind", "Halderaker", "eivind@gmail.com", "PU", 4, "passord123" );
 
-        mockMvc.perform(get("/userByID?id=1")
-                .contentType("application/json"))
-                .andExpect(status().isForbidden());
+        JSONObject idJSON = new JSONObject(addUserResult.andReturn().getResponse().getContentAsString());
+        int id = idJSON.getInt("id");
+
+        ResultActions result = getUserById(id, "");
+        result.andExpect(status().isForbidden());
     }
 
     @Test
+    @Transactional
     public void authenticationTokenReceived() throws Exception {
-        mockMvc.perform(post("/addUser?firstName=Henrik&lastName=Hexeberg&email=hotmail&study=Sikkerhet&year=4&password=MockPassword")
-                .contentType("application/json"));
+        String password = "MockPassword";
+        ResultActions addUserResult = addUser("Henrik", "Hexeberg", "henrik@hotmail.com", "Sikkerhet", 4, password);
 
-        String json = "{\"id\":1, \"password\":\"MockPassword\"}";
+        JSONObject idJSON = new JSONObject(addUserResult.andReturn().getResponse().getContentAsString());
+        int id = idJSON.getInt("id");
 
-        mockMvc.perform(post("/authenticate")
-                .contentType("application/json")
-                .content(json))
-                .andExpect(status().isOk());
+        ResultActions result = authenticate(id, password);
+        result.andExpect(status().isOk());
     }
 
     @Test
+    @Transactional
     public void authenticationTokenNotReceivedIfWrongCredentials() throws Exception {
-        mockMvc.perform(post("/addUser?firstName=Henrik&lastName=Hexeberg&email=hotmail&study=Sikkerhet&year=4&password=MockPassword")
-                .contentType("application/json"));
+        String password = "password";
+        String wrongPassword = "WrongPassword";
 
-        String json = "{\"id\":1, \"password\":\"123\"}";
+        ResultActions addUserResult = addUser("Henrik", "Hexeberg", "henrik@hotmail.com", "Sikkerhet", 4, password);
 
-        mockMvc.perform(post("/authenticate")
-                .contentType("application/json")
-                .content(json))
-                .andExpect(status().isForbidden());
+        JSONObject idJSON = new JSONObject(addUserResult.andReturn().getResponse().getContentAsString());
+        int id = idJSON.getInt("id");
+
+        ResultActions result = authenticate(id, wrongPassword);
+        result.andExpect(status().isForbidden());
     }
 
 
     @Test
-    public void getUserByIdOneShouldWorkIfAtLeastOneUserIsInDB() throws Exception{
-        mockMvc.perform(post("/addUser?firstName=Henrik&lastName=Hexeberg&email=hotmail&study=Sikkerhet&year=4&password=MockPassword&salt=MockSalt123")
-                .contentType("application/json"));
+    @Transactional
+    public void getUserByIdShouldWorkIfAtLeastOneUserIsInDB() throws Exception{
+        String password = "password";
 
-        mockMvc.perform(post("/authenticate")
-                .contentType("application/json"));
+        ResultActions addUserResult = addUser("Henrik", "Hexeberg", "henrik@hotmail.com", "Sikkerhet", 4, password);
 
-        String requestAuthJSON = "{\"id\":1, \"password\":\"MockPassword\"}";
+        JSONObject idJSON = new JSONObject(addUserResult.andReturn().getResponse().getContentAsString());
+        int id = idJSON.getInt("id");
 
-        ResultActions result = mockMvc.perform(post("/authenticate")
-                .contentType("application/json")
-                .content(requestAuthJSON));
+        ResultActions authResult = authenticate(id, password);
 
-        JSONObject jsonObject = new JSONObject(result.andReturn().getResponse().getContentAsString());
-        String token = jsonObject.getString("jwt");
+        JSONObject json = new JSONObject(authResult.andReturn().getResponse().getContentAsString());
+        String token = json.getString("jwt");
+        System.out.println(token);
 
-
-        mockMvc.perform(get("/userByID?id=1")
-                .header("Authorization", "Bearer " + token)
-                .contentType("application/json"))
-                .andExpect(status().isOk());
+        ResultActions result = getUserById(id, token);
+        result.andExpect(status().isOk());
 
     }
 
