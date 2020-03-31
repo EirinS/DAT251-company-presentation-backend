@@ -1,5 +1,7 @@
 package com.presentation.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
@@ -27,6 +29,7 @@ public class User {
 
     private String foodPreferences;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserAttendingPresentation> attendingPresentations;
 

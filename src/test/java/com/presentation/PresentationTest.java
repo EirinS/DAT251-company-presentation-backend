@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionSystemException;
 
@@ -70,7 +69,7 @@ public class PresentationTest {
 
         // Inserting presentation with null value for date
         // should yield exception.
-        assertThrows(DataIntegrityViolationException.class, () -> presentationRepo.save(pres));
+        assertThrows(TransactionSystemException.class, () -> presentationRepo.save(pres));
     }
 
 
@@ -89,6 +88,7 @@ public class PresentationTest {
     }
 
     @Test
+    @Transactional
     public void presentationCanBeInsertedInDB() {
         Presentation pres = new Presentation();
         setPresentationValues(pres);

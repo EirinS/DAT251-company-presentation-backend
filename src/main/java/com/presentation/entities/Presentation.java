@@ -12,7 +12,7 @@ public class Presentation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    //@NotNull
+    @NotNull
     private Date dateOfPresentation;
 
     @NotNull
