@@ -79,6 +79,7 @@ public class UserController {
 		if (!maybeUser.isPresent()){
 			System.err.println("No user with this id exists in the database");
 		}
+
 		return maybeUser;
 	}
 

@@ -17,21 +17,25 @@ public class UserService implements UserDetailsService {
     @Autowired
     private final UserRepository userRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    /*
+
     public String addNewUser(User user) throws Exception {
         userRepository.save(user);
         return "Saved";
     }
 
-    public Optional<User> getUser(String username) throws Exception {
-        return userRepository.getNewUser(username);
+    public Optional<User> getMyDetails(String token) throws Exception {
+        String id = jwtUtil.extractUsername(token);
+        return userRepository.findById(Integer.parseInt(id));
     }
 
-     */
+
 
 
     @Override
