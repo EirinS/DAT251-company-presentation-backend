@@ -124,8 +124,33 @@ public class UserControllerMockTest {
 
         ResultActions result = getUserById(id, token);
         result.andExpect(status().isOk());
+    }
+
+
+    @Test
+    @Transactional
+    public void getUserByIdWithAnotherUsersTokenShouldBeForbidden() throws Exception{
+        String passwordOne = "passwordOne";
+        ResultActions addUserResultOne = addUser("Henrik", "Hexeberg", "henrik@hotmail.com", "Sikkerhet", 4, passwordOne);
+        JSONObject idJSONOne = new JSONObject(addUserResultOne.andReturn().getResponse().getContentAsString());
+        int idUserOne = idJSONOne.getInt("id");
+
+        String passwordTwo = "passwordTwo";
+        ResultActions addUserResultTwo = addUser("Henrik", "Hexeberg", "henrik@hotmail.com", "Sikkerhet", 4, passwordTwo);
+        JSONObject idJSONTwo = new JSONObject(addUserResultTwo.andReturn().getResponse().getContentAsString());
+        int idUserTwo = idJSONTwo.getInt("id");
+
+        ResultActions authResult = authenticate(idUserOne, passwordOne);
+
+        JSONObject json = new JSONObject(authResult.andReturn().getResponse().getContentAsString());
+        String token = json.getString("jwt");
+        System.out.println(token);
+
+        ResultActions result = getUserById(idUserTwo, token);
+        result.andExpect(status().isForbidden());
 
     }
+
 
 
 
