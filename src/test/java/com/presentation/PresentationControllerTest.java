@@ -39,6 +39,20 @@ public class PresentationControllerTest {
 
     @Test
     @Transactional
+    public void addPresentationWithoutTokenShouldBeForbidden() throws Exception {
+        mockMvc.perform(post("/addPresentation" +
+                "?dateOfPresentation=2020-02-0" +
+                "2&companyPresenting=BEKK" +
+                "&maxAttendance=100" +
+                "&contactPerson=Eirin" +
+                "&meetupAddress=Hoytek" +
+                "&description=This is fun!").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    /*
+    @Test
+    @Transactional
     public void addPresentationReturns200OK() throws Exception {
         mockMvc.perform(post("/addPresentation" +
                 "?dateOfPresentation=2020-02-0" +
@@ -49,4 +63,5 @@ public class PresentationControllerTest {
                 "&description=This is fun!").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+     */
 }
