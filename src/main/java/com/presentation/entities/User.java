@@ -1,6 +1,7 @@
 package com.presentation.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,12 +23,21 @@ public class User {
     private String email;
 
     @NotNull
+    private String password;
+
+    @NotNull String salt;
+
+    @NotNull
     private String study;
 
     @NotNull
     private String year; //aarstrinn på norsk
 
     private String foodPreferences;
+
+
+    @NotNull
+    private String role;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -81,6 +91,19 @@ public class User {
         return foodPreferences;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.setSalt();
+        this.password = BCrypt.hashpw(password, this.salt);
+    }
+
     public void setFoodPreferences(String foodPreferences) {
         this.foodPreferences = foodPreferences;
     }
@@ -91,5 +114,21 @@ public class User {
 
     public void setAttendingPresentations(Set<UserAttendingPresentation> attendingPresentations) {
         this.attendingPresentations = attendingPresentations;
+    }
+
+    private void setSalt() {
+        this.salt = BCrypt.gensalt();
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
