@@ -29,6 +29,7 @@ public class UserTest {
         user.setStudy("PU");
         user.setYear("4");
         user.setPassword("password123");
+        user.setRole("user");
         userRepo.save(user);
     }
 
@@ -61,6 +62,7 @@ public class UserTest {
         user.setStudy("Sikkerhet");
         user.setYear("2");
         user.setPassword("password321");
+        user.setRole("user");
         userRepo.save(user);
         assertEquals(current_count + 1, userRepo.count());
     }

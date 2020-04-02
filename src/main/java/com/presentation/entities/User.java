@@ -35,6 +35,10 @@ public class User {
 
     private String foodPreferences;
 
+
+    @NotNull
+    private String role;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserAttendingPresentation> attendingPresentations;
@@ -118,5 +122,13 @@ public class User {
 
     public String getSalt() {
         return salt;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

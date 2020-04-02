@@ -61,6 +61,7 @@ public class UserController {
         user.setStudy(study);
         user.setYear(year);
         user.setPassword(password);
+        user.setRole("user");
 
         userRepository.save(user);
         return "{\"id\":" + user.getId() + "}";
@@ -79,7 +80,6 @@ public class UserController {
 		if (!maybeUser.isPresent()){
 			System.err.println("No user with this id exists in the database");
 		}
-
 		return maybeUser;
 	}
 
