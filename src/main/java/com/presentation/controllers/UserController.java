@@ -58,11 +58,12 @@ public class UserController {
         user.setStudy(study);
         user.setYear(year);
         user.setPassword(password);
-        user.setRole("admin");
+        user.setRole("user");
 
         userRepository.save(user);
         return "{\"id\":" + user.getId() + "}";
     }
+
 
     @GetMapping(path = "/api/admin/allUsers")
     public @ResponseBody

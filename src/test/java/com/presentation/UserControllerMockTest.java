@@ -1,5 +1,7 @@
 package com.presentation;
 
+import com.presentation.entities.User;
+import com.presentation.repositories.UserRepository;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
@@ -27,6 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserControllerMockTest {
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private MockMvc mockMvc;
 
     public ResultActions addUser(String firstname, String lastName, String email, String study, int year, String password)throws Exception{
@@ -38,6 +43,20 @@ public class UserControllerMockTest {
                 "&year=" + year +
                 "&password=" + password)
                 .contentType("application/json"));
+    }
+
+
+    public User addAdmin(String firstname, String lastName, String email, String study, int year, String password)throws Exception{
+        User admin = new User();
+        admin.setFirstName(firstname);
+        admin.setLastName(lastName);
+        admin.setEmail(email);
+        admin.setStudy(study);
+        admin.setYear(year + "");
+        admin.setPassword(password);
+        admin.setRole("admin");
+        userRepository.save(admin);
+        return admin;
     }
 
 
@@ -116,14 +135,28 @@ public class UserControllerMockTest {
 
     @Test
     @Transactional
-    public void getUserByIdShouldWorkIfAtLeastOneUserIsInDB() throws Exception{
-        String password = "password";
+    public void getUserByIdShouldReturn200OkAsAdmin() throws Exception{
+        String password = "passord";
+        User admin = addAdmin("Henrik", "Hexeberg", "henrik@ok.no", "sikkerhet", 4, password);
 
-        ResultActions addUserResult = addUser("Henrik", "Hexeberg", "henrik@hotmail.com", "Sikkerhet", 4, password);
+        ResultActions authResult = authenticate(admin.getId(), password);
+
+        JSONObject json = new JSONObject(authResult.andReturn().getResponse().getContentAsString());
+        String token = json.getString("jwt");
+        System.out.println(token);
+
+        ResultActions result = getUserById(admin.getId(), token);
+        result.andExpect(status().isOk());
+    }
+
+    @Test
+    @Transactional
+    public void getUserByIdShouldBeForbiddenAsUser() throws Exception{
+        String password = "passord";
+        ResultActions addUserResult = addUser("Henrik", "Hexeberg", "henrik@ok.no", "sikkerhet", 4, password);
 
         JSONObject idJSON = new JSONObject(addUserResult.andReturn().getResponse().getContentAsString());
         int id = idJSON.getInt("id");
-
         ResultActions authResult = authenticate(id, password);
 
         JSONObject json = new JSONObject(authResult.andReturn().getResponse().getContentAsString());
@@ -131,7 +164,7 @@ public class UserControllerMockTest {
         System.out.println(token);
 
         ResultActions result = getUserById(id, token);
-        result.andExpect(status().isOk());
+        result.andExpect(status().isForbidden());
     }
 
 
@@ -153,6 +186,16 @@ public class UserControllerMockTest {
 
         ResultActions result = getUserDetails(token);
         result.andExpect(status().isOk());
+    }
+
+
+    @Test
+    @Transactional
+    public void getMyUserDetailsWithoutTokenShouldBeForbidden() throws Exception{
+        String mockToken = "lkjldksajd";
+
+        ResultActions result = getUserDetails(mockToken);
+        result.andExpect(status().isForbidden());
     }
 
 
