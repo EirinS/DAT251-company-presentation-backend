@@ -44,7 +44,7 @@ public class UserController {
 
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the GET or POST request
-    @PostMapping(path = "/addUser") // Map ONLY POST Requests
+    @PostMapping(path = "/api/register") // Map ONLY POST Requests
     public @ResponseBody
     String addNewUser(
             @Valid @RequestParam String firstName,
@@ -61,20 +61,20 @@ public class UserController {
         user.setStudy(study);
         user.setYear(year);
         user.setPassword(password);
-        user.setRole("user");
+        user.setRole("admin");
 
         userRepository.save(user);
         return "{\"id\":" + user.getId() + "}";
     }
 
-    @GetMapping(path = "/allUsers")
+    @GetMapping(path = "/api/allUsers")
     public @ResponseBody
     Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
         return userRepository.findAll();
     }
 
-	@GetMapping(path = "/userByID")
+	@GetMapping(path = "/api/userByID")
 	public @ResponseBody Optional<User> getUserById(@RequestParam int id){
 		Optional<User> maybeUser = userRepository.findById(id);
 		if (!maybeUser.isPresent()){
@@ -84,7 +84,7 @@ public class UserController {
 	}
 
 
-    @PostMapping(path = "/authenticate")
+    @PostMapping(path = "/api/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             Optional<User> fetchedUser = userRepository.findById(authenticationRequest.getId());

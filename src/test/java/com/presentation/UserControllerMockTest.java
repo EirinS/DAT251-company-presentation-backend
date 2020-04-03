@@ -30,7 +30,7 @@ public class UserControllerMockTest {
     private MockMvc mockMvc;
 
     public ResultActions addUser(String firstname, String lastName, String email, String study, int year, String password)throws Exception{
-        return mockMvc.perform(post("/addUser" +
+        return mockMvc.perform(post("/api/register" +
                 "?firstName="+ firstname +
                 "&lastName=" + lastName +
                 "&email=" + email +
@@ -43,7 +43,7 @@ public class UserControllerMockTest {
 
     public ResultActions getUserById(int id, String token) throws Exception{
         if (token == null) token = "";
-        return mockMvc.perform(get("/userByID?id=" + id)
+        return mockMvc.perform(get("/api/userByID?id=" + id)
                 .header("Authorization", "Bearer " + token)
                 .contentType("application/json"));
     }
@@ -51,7 +51,7 @@ public class UserControllerMockTest {
     public ResultActions authenticate(int id, String password) throws Exception{
         String requestAuthJSON = "{\"id\":" + id + ", \"password\":\"" + password + "\"}";
 
-        return mockMvc.perform(post("/authenticate")
+        return mockMvc.perform(post("/api/authenticate")
                 .contentType("application/json")
                 .content(requestAuthJSON));
     }
