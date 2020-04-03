@@ -41,9 +41,17 @@ public class UserControllerMockTest {
     }
 
 
+    public ResultActions getUserDetails(String token) throws Exception{
+        if (token == null) token = "";
+        return mockMvc.perform(get("/api/user/myDetails")
+                .header("Authorization", "Bearer " + token)
+                .contentType("application/json"));
+    }
+
+
     public ResultActions getUserById(int id, String token) throws Exception{
         if (token == null) token = "";
-        return mockMvc.perform(get("/api/userByID?id=" + id)
+        return mockMvc.perform(get("/api/admin/userByID?id=" + id)
                 .header("Authorization", "Bearer " + token)
                 .contentType("application/json"));
     }
@@ -123,6 +131,27 @@ public class UserControllerMockTest {
         System.out.println(token);
 
         ResultActions result = getUserById(id, token);
+        result.andExpect(status().isOk());
+    }
+
+
+    @Test
+    @Transactional
+    public void getMyUserDetailsShouldReturn200OK() throws Exception{
+        String password = "password";
+
+        ResultActions addUserResult = addUser("Henrik", "Hexeberg", "henrik@hotmail.com", "Sikkerhet", 4, password);
+
+        JSONObject idJSON = new JSONObject(addUserResult.andReturn().getResponse().getContentAsString());
+        int id = idJSON.getInt("id");
+
+        ResultActions authResult = authenticate(id, password);
+
+        JSONObject json = new JSONObject(authResult.andReturn().getResponse().getContentAsString());
+        String token = json.getString("jwt");
+        System.out.println(token);
+
+        ResultActions result = getUserDetails(token);
         result.andExpect(status().isOk());
     }
 

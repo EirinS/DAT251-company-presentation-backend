@@ -1,7 +1,5 @@
 package com.presentation.util;
 
-import com.presentation.util.JwtRequestFilter;
-import com.presentation.util.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,7 +33,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/api/authenticate", "/api/register").permitAll()
                 .antMatchers("/api/user/**").hasAnyAuthority("admin", "user")
-                .antMatchers("/**").hasAuthority("admin")
+                .antMatchers("**").hasAuthority("admin")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().cors().disable();

@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
         return "Saved";
     }
 
-    public Optional<User> getMyDetails(String token) throws Exception {
+    public Optional<User> getMyDetails(String token) {
         String id = jwtUtil.extractUsername(token);
         return userRepository.findById(Integer.parseInt(id));
     }

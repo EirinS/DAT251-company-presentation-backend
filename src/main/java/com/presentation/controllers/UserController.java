@@ -2,10 +2,7 @@ package com.presentation.controllers;
 
 import com.presentation.entities.User;
 import com.presentation.repositories.UserRepository;
-import com.presentation.util.AuthenticationRequest;
-import com.presentation.util.AuthenticationResponse;
-import com.presentation.util.JwtUtil;
-import com.presentation.util.UserService;
+import com.presentation.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -67,14 +64,14 @@ public class UserController {
         return "{\"id\":" + user.getId() + "}";
     }
 
-    @GetMapping(path = "/api/allUsers")
+    @GetMapping(path = "/api/admin/allUsers")
     public @ResponseBody
     Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
         return userRepository.findAll();
     }
 
-	@GetMapping(path = "/api/userByID")
+	@GetMapping(path = "/api/admin/userByID")
 	public @ResponseBody Optional<User> getUserById(@RequestParam int id){
 		Optional<User> maybeUser = userRepository.findById(id);
 		if (!maybeUser.isPresent()){
@@ -82,6 +79,15 @@ public class UserController {
 		}
 		return maybeUser;
 	}
+
+    @GetMapping(path = "/api/user/myDetails")
+    public @ResponseBody Optional<User> getMyDetails(@RequestHeader String authorization){
+        Optional<User> maybeUser = userService.getMyDetails(authorization.substring(7));
+        if (!maybeUser.isPresent()){
+            System.err.println("No user with this id exists in the database");
+        }
+        return maybeUser;
+    }
 
 
     @PostMapping(path = "/api/authenticate")
