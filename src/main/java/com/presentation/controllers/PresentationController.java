@@ -18,7 +18,7 @@ public class PresentationController {
     @Autowired
     private PresentationRepository presentationRepository;
 
-    @PostMapping(path = "/addPresentation") // Map ONLY POST Requests
+    @PostMapping(path = "/api/admin/addPresentation") // Map ONLY POST Requests
     public @ResponseBody
     String addNewPresentation(
             @RequestParam Date dateOfPresentation,
@@ -37,18 +37,18 @@ public class PresentationController {
         presentation.setDescription(description);
 
         presentationRepository.save(presentation);
-        return "Saved";
+        return "{\"id\":" + presentation.getId() + "}";
     }
 
-    @GetMapping(path = "/allPresentations")
+    @GetMapping(path = "/api/user/allPresentations")
     public @ResponseBody
     Iterable<Presentation> getPresentations() {
         return presentationRepository.findAll();
     }
 
-    @PatchMapping(path = "/editPresentation/{id}")
+    @PatchMapping(path = "/api/admin/editPresentation")
     public @ResponseBody
-    Presentation editPresentation(@PathVariable("id") Integer id, @RequestBody Map<String, Object> fields) {
+    Presentation editPresentation(@RequestParam("id") Integer id, @RequestBody Map<String, Object> fields) {
         Presentation presentation = presentationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         fields.forEach((k, v) -> {
             Field field = ReflectionUtils.findField(Presentation.class, k);

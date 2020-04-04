@@ -65,6 +65,7 @@ public class UserControllerMockTest {
         return mockMvc.perform(get("/api/user/myDetails")
                 .header("Authorization", "Bearer " + token)
                 .contentType("application/json"));
+
     }
 
 
@@ -143,7 +144,6 @@ public class UserControllerMockTest {
 
         JSONObject json = new JSONObject(authResult.andReturn().getResponse().getContentAsString());
         String token = json.getString("jwt");
-        System.out.println(token);
 
         ResultActions result = getUserById(admin.getId(), token);
         result.andExpect(status().isOk());
