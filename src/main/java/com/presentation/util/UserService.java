@@ -3,12 +3,14 @@ package com.presentation.util;
 import com.presentation.entities.User;
 import com.presentation.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -30,7 +32,7 @@ public class UserService implements UserDetailsService {
         return "Saved";
     }
 
-    public Optional<User> getMyDetails(String token) throws Exception {
+    public Optional<User> getMyDetails(String token) {
         String id = jwtUtil.extractUsername(token);
         return userRepository.findById(Integer.parseInt(id));
     }
@@ -44,8 +46,9 @@ public class UserService implements UserDetailsService {
         Optional<User> user = userRepository.findById(Integer.parseInt(userId));
         if (!user.isPresent()) throw new UsernameNotFoundException("User not found");
         User presentUser = user.get();
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(presentUser.getRole());
 
-        return new org.springframework.security.core.userdetails.User(Integer.toString(presentUser.getId()), presentUser.getPassword(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(Integer.toString(presentUser.getId()), presentUser.getPassword(), Arrays.asList(simpleGrantedAuthority));
     }
 
 }
