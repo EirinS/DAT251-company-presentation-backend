@@ -17,7 +17,7 @@ public class UserAttendingPresentationController {
     @Autowired
     private UserAttendingPresentationRepository userAttendingPresentationRepository;
 
-    @PostMapping(path = "/attendPresentation") // Map ONLY POST Requests
+    @PostMapping(path = "/api/user/attendPresentation") // Map ONLY POST Requests
     public @ResponseBody
     String addNewPresentation(
             @RequestParam User user,
@@ -33,7 +33,7 @@ public class UserAttendingPresentationController {
         return "Saved";
     }
 
-    @GetMapping(path = "/allAttending/{presentationId}")
+    @GetMapping(path = "/api/admin/allAttending/{presentationId}")
     public @ResponseBody
     List<User> getUserAttendingPresentation(@PathVariable("presentationId") int id) {
         return userAttendingPresentationRepository.findByPresentation(id);

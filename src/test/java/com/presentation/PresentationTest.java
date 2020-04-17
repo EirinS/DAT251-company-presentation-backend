@@ -140,5 +140,4 @@ public class PresentationTest {
         assertTrue(returned.getUsersAttending().contains(ua));
     }
 
-
 }
