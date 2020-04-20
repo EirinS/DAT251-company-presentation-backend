@@ -15,7 +15,7 @@ public class CompanyController {
     @Autowired
     private CompanyRepository companyRepository;
 
-    @PostMapping(path = "/addCompany") // Map ONLY POST Requests
+    @PostMapping(path = "/api/admin/addCompany") // Map ONLY POST Requests
     public @ResponseBody
     String addNewPresentation(
             @RequestParam String companyName,
@@ -33,7 +33,7 @@ public class CompanyController {
         return "Saved";
     }
 
-    @GetMapping(path = "/allCompanies")
+    @GetMapping(path = "/api/user/allCompanies")
     public @ResponseBody
     Iterable<Company> getCompanies() {
         return companyRepository.findAll();
