@@ -13,6 +13,7 @@ public class CompanyPresentationApplication {
         SpringApplication.run(CompanyPresentationApplication.class, args);
     }
 
+    /*
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -24,5 +25,6 @@ public class CompanyPresentationApplication {
             }
         };
     }
+     */
 
 }
