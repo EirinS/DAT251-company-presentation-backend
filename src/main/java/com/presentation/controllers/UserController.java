@@ -48,8 +48,8 @@ public class UserController {
     @PostMapping(path = "/api/register") // Map ONLY POST Requests
     public @ResponseBody
     ResponseEntity<User> addNewUser(@RequestBody User user) {
-        userRepository.save(user);
-        return ResponseEntity.ok(user);
+        User returnUser = userRepository.save(user);
+        return ResponseEntity.ok(returnUser);
     }
 
 

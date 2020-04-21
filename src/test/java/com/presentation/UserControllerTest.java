@@ -1,5 +1,6 @@
 package com.presentation;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.presentation.entities.User;
 import com.presentation.repositories.UserRepository;
 import org.json.JSONObject;
@@ -35,13 +36,15 @@ public class UserControllerTest {
     private MockMvc mockMvc;
 
     public ResultActions addUser(String firstname, String lastName, String email, String study, int year, String password)throws Exception{
-        return mockMvc.perform(post("/api/register" +
-                "?firstName="+ firstname +
-                "&lastName=" + lastName +
-                "&email=" + email +
-                "&study=" + study +
-                "&year=" + year +
-                "&password=" + password)
+        JSONObject json = new JSONObject();
+        json.put("firstName", firstname);
+        json.put("lastName", lastName);
+        json.put("email", email);
+        json.put("study", study);
+        json.put("password", password);
+        json.put("year", year);
+        return mockMvc.perform(post("/api/register")
+                .content(json.toString())
                 .contentType("application/json"));
     }
 
@@ -83,8 +86,6 @@ public class UserControllerTest {
                 .contentType("application/json")
                 .content(requestAuthJSON));
     }
-
-
 
     @Test
     @Transactional

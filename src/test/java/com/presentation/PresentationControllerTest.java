@@ -77,7 +77,7 @@ public class PresentationControllerTest {
         String password = "password";
         User admin = addAdmin("Henrik", "Hexeberg", "henrik@ok.no", "sikkerhet", 4, password);
         String token = authenticate(admin.getId(), password);
-        mockMvc.perform(post("/addCompany" +
+        mockMvc.perform(post("/api/admin/addCompany" +
                 "?companyName=BEKK" +
                 "&logo=hey" +
                 "&website=bekk.no" +

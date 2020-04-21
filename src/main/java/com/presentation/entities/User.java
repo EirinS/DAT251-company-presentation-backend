@@ -2,6 +2,7 @@ package com.presentation.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.presentation.util.deserialize.UserDeserialize;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
