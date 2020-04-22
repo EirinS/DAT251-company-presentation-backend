@@ -1,6 +1,8 @@
 package com.presentation.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.presentation.util.deserialize.UserDeserialize;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
@@ -8,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity // This tells Hibernate to make a table out of this class
+@JsonDeserialize(using = UserDeserialize.class)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
